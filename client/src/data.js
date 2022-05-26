@@ -27,16 +27,19 @@ export const categories = [
     id: 1,
     img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     title: "SHIRT STYLE!",
+    cat :"shirt"
   },
   {
     id: 2,
     img: "https://images.unsplash.com/photo-1512850692650-c382e34f7fb2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=468&q=80",
     title: "AUTUMN LOVE",
+    cat :"sweater"
   },
   {
     id: 3,
     img: "https://images.unsplash.com/photo-1512353087810-25dfcd100962?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
     title: "LIGHT JACKETS",
+    cat :"jackets"
   },
 ];
 
