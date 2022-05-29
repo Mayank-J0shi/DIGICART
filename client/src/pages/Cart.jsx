@@ -5,6 +5,12 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import StripeCheckout from "react-stripe-checkout";
+import { useEffect, useState } from "react";
+import { userRequest } from "../requestMethods";
+import { useNavigate } from "react-router-dom";
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -48,7 +54,6 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
-
 `;
 
 const Info = styled.div`
@@ -158,16 +163,38 @@ const Button = styled.button`
 //Navbar -> Cart -> Container -> Wrapper -> Top -> TopButton -> TopTexts -> TopText -> TopText -> TopText -> Bottom -> Info -> Product -> ProductDetail -> Image -> Details -> ProductName -> ProductId -> ProductColor -> ProductSize -> PriceDetail -> ProductAmountContainer -> ProductAmount -> ProductPrice -> Hr -> Summary -> SummaryTitle -> SummaryItem -> SummaryItemText -> SummaryItemPrice -> SummaryItem -> SummaryItemText -> SummaryItemPrice -> SummaryItem -> SummaryItemText -> SummaryItemPrice -> Button
 //navbar , announcement then the main wrapper
 //wrapper is divided into title,top and bottom
-//top contains the top buttons and texts 
+//top contains the top buttons and texts
 //top buttons are continue shopping and checkout
 //top texts are the cart and the total
 //the bottom contains the info and the summary
-//info contains the product details such as name,id,color,size and price 
+//info contains the product details such as name,id,color,size and price
 //and summary contains the total price and the checkout button
 //the checkout button is disabled when the cart is empty
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  const history = useNavigate();
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: 500,
+        });
+        history.push("/success", {
+          stripeData: res.data,
+          products: cart,
+        });
+      } catch {}
+    };
+    stripeToken && makeRequest();
+  }, [stripeToken, cart.total, history]);
 
   return (
     <Container>
@@ -234,7 +261,18 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <StripeCheckout
+              name="DIGICART LMT"
+              image="https://avatars.githubusercontent.com/u/54811830?s=400&v=4"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.total}`}
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
