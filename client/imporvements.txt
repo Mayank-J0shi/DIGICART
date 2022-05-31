@@ -2,3 +2,6 @@
 2.add new data for the productlist page and the products to be shown in the home page as we cannot use all of them together and they are very less
 so make a different object for them
 3.filter down some components in the pages
+4.correct the database with good images of the products
+5.some correction the db for orders/income routes
+6.what is the significance of all those files on redux folder.
