@@ -1,3 +1,5 @@
 node_modules/
 .env
-.docx
+.env.local
+imporvements.txt/
+walkthrough.docx/

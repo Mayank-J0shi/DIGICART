@@ -5,3 +5,4 @@ so make a different object for them
 4.correct the database with good images of the products
 5.some correction the db for orders/income routes
 6.what is the significance of all those files on redux folder.
+7.add a landing page after creating a product in new product page
